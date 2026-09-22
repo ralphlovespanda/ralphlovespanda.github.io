@@ -1,0 +1,2946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Universe I Would Choose You In</title>
+
+<style>
+
+/* =========================================================
+   BASIC SETUP
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #02030a;
+    color: #f7f4ff;
+    font-family: Georgia, "Times New Roman", serif;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   GALAXY BACKGROUND
+========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    z-index: -10;
+
+    background:
+        radial-gradient(
+            ellipse at 30% 30%,
+            rgba(86, 61, 150, 0.20),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 70% 60%,
+            rgba(42, 77, 150, 0.18),
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(102, 40, 110, 0.15),
+            transparent 35%
+        );
+
+    animation: galaxyMove 35s ease-in-out infinite alternate;
+}
+
+@keyframes galaxyMove {
+
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    100% {
+        transform: rotate(8deg) scale(1.15);
+    }
+}
+
+/* =========================================================
+   STAR FIELD
+========================================================= */
+
+#stars {
+    position: fixed;
+    inset: 0;
+    z-index: -8;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+
+    animation:
+        twinkle var(--duration) ease-in-out infinite alternate;
+
+    opacity: var(--opacity);
+}
+
+@keyframes twinkle {
+
+    from {
+        transform: scale(.5);
+        opacity: .2;
+    }
+
+    to {
+        transform: scale(1.8);
+        opacity: 1;
+    }
+}
+
+/* =========================================================
+   SHOOTING STARS
+========================================================= */
+
+.shooting-star {
+    position: fixed;
+    width: 150px;
+    height: 2px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.2),
+        white
+    );
+
+    transform: rotate(-35deg);
+
+    z-index: -5;
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.shooting-star:nth-child(1) {
+    top: 15%;
+    left: -200px;
+    animation: shooting1 9s linear infinite;
+}
+
+.shooting-star:nth-child(2) {
+    top: 40%;
+    left: -200px;
+    animation: shooting2 13s linear infinite 4s;
+}
+
+.shooting-star:nth-child(3) {
+    top: 65%;
+    left: -200px;
+    animation: shooting3 11s linear infinite 7s;
+}
+
+@keyframes shooting1 {
+
+    0% {
+        transform: translateX(0) rotate(-35deg);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    20% {
+        transform: translateX(120vw) rotate(-35deg);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes shooting2 {
+
+    0% {
+        transform: translateX(0) rotate(-35deg);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    20% {
+        transform: translateX(120vw) rotate(-35deg);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes shooting3 {
+
+    0% {
+        transform: translateX(0) rotate(-35deg);
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    20% {
+        transform: translateX(120vw) rotate(-35deg);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   INTRO / PASSWORD
+========================================================= */
+
+#passwordScreen {
+
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(37, 31, 70, .75),
+            rgba(1, 2, 8, .98)
+        );
+
+    z-index: 1000;
+
+    transition:
+        opacity 1.5s ease,
+        visibility 1.5s ease;
+}
+
+#passwordScreen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.password-container {
+    width: min(90%, 600px);
+    padding: 30px;
+}
+
+.loading-text {
+    font-size: 11px;
+    letter-spacing: 5px;
+    opacity: .55;
+    margin-bottom: 30px;
+}
+
+.password-title {
+    font-size: clamp(38px, 8vw, 80px);
+    font-weight: normal;
+    line-height: 1.05;
+    margin-bottom: 25px;
+}
+
+.password-subtitle {
+    opacity: .65;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+.password-input {
+
+    width: min(300px, 90%);
+
+    padding: 15px 20px;
+
+    background: rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.25);
+
+    color: white;
+
+    text-align: center;
+
+    outline: none;
+
+    font-family: Georgia, serif;
+
+    letter-spacing: 3px;
+
+    transition: .4s;
+}
+
+.password-input:focus {
+    border-color: white;
+    box-shadow:
+        0 0 25px
+        rgba(255,255,255,.1);
+}
+
+.enter-button {
+
+    display: block;
+
+    margin: 20px auto 0;
+
+    padding: 14px 30px;
+
+    background: transparent;
+
+    border:
+        1px solid
+        rgba(255,255,255,.4);
+
+    color: white;
+
+    cursor: pointer;
+
+    font-family: Georgia, serif;
+
+    letter-spacing: 3px;
+
+    transition: .5s;
+}
+
+.enter-button:hover {
+
+    background: white;
+    color: black;
+
+    box-shadow:
+        0 0 40px
+        rgba(255,255,255,.3);
+}
+
+.error {
+
+    margin-top: 20px;
+
+    color: #c9b7ff;
+
+    font-size: 13px;
+
+    opacity: 0;
+
+    transition: .4s;
+}
+
+.error.show {
+    opacity: 1;
+}
+
+/* =========================================================
+   MAIN WEBSITE
+========================================================= */
+
+#universe {
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 2s ease;
+}
+
+#universe.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+.music-button {
+
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.35);
+
+    background:
+        rgba(5,5,15,.7);
+
+    backdrop-filter: blur(10px);
+
+    color: white;
+
+    cursor: pointer;
+
+    z-index: 100;
+
+    font-size: 18px;
+
+    transition: .4s;
+}
+
+.music-button:hover {
+    transform: scale(1.1);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 40px 25px;
+
+    position: relative;
+}
+
+.hero-content {
+    max-width: 900px;
+}
+
+.eyebrow {
+
+    font-size: 11px;
+
+    letter-spacing: 6px;
+
+    text-transform: uppercase;
+
+    opacity: .5;
+
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+
+    font-size:
+        clamp(48px, 10vw, 105px);
+
+    font-weight: normal;
+
+    line-height: .95;
+
+    margin-bottom: 35px;
+
+    text-shadow:
+        0 0 40px
+        rgba(255,255,255,.12);
+}
+
+.hero-description {
+
+    font-size: 18px;
+
+    line-height: 2;
+
+    opacity: .7;
+
+    max-width: 600px;
+
+    margin: auto;
+}
+
+.scroll-hint {
+
+    margin-top: 60px;
+
+    font-size: 11px;
+
+    letter-spacing: 4px;
+
+    opacity: .4;
+
+    animation:
+        bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+section.chapter {
+
+    min-height: 100vh;
+
+    padding:
+        120px
+        25px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    position: relative;
+}
+
+.chapter-inner {
+
+    max-width: 850px;
+
+    width: 100%;
+
+    opacity: 0;
+
+    transform:
+        translateY(60px)
+        scale(.96);
+
+    transition:
+        opacity 1.5s ease,
+        transform 1.5s ease;
+}
+
+.chapter-inner.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.chapter-icon {
+
+    font-size: 65px;
+
+    margin-bottom: 30px;
+
+    display: inline-block;
+
+    animation:
+        floating 5s ease-in-out infinite;
+}
+
+@keyframes floating {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.chapter-title {
+
+    font-size:
+        clamp(40px, 7vw, 70px);
+
+    font-weight: normal;
+
+    line-height: 1;
+
+    margin-bottom: 30px;
+}
+
+.divider {
+
+    width: 70px;
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,.4);
+
+    margin:
+        35px auto;
+}
+
+.chapter-text {
+
+    font-size: 18px;
+
+    line-height: 2;
+
+    opacity: .78;
+}
+
+/* =========================================================
+   FLOATING PLANETS
+========================================================= */
+
+.planet-orbit {
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 50%;
+
+    animation:
+        orbit 30s linear infinite;
+
+    pointer-events: none;
+}
+
+.planet {
+
+    position: absolute;
+
+    top: -30px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            #d9d3ff,
+            #776da5 45%,
+            #18162d 80%
+        );
+
+    box-shadow:
+        0 0 35px
+        rgba(150,130,255,.25);
+}
+
+@keyframes orbit {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================================
+   MEMORY CARDS
+========================================================= */
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(210px,1fr)
+        );
+
+    gap: 18px;
+
+    margin-top: 50px;
+}
+
+.card {
+
+    padding: 30px 20px;
+
+    min-height: 180px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.025);
+
+    backdrop-filter:
+        blur(10px);
+
+    transition:
+        transform .5s,
+        border .5s,
+        background .5s;
+}
+
+.card:hover {
+
+    transform:
+        translateY(-10px)
+        scale(1.02);
+
+    border-color:
+        rgba(255,255,255,.4);
+
+    background:
+        rgba(255,255,255,.06);
+}
+
+.card h3 {
+
+    font-weight: normal;
+
+    margin-bottom: 18px;
+}
+
+.card p {
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    opacity: .65;
+}
+
+/* =========================================================
+   MOON
+========================================================= */
+
+.moon-container {
+
+    margin:
+        50px auto;
+
+    width: 150px;
+    height: 150px;
+
+    position: relative;
+}
+
+.moon {
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffffff,
+            #cfcde3 50%,
+            #77758e 100%
+        );
+
+    box-shadow:
+        0 0 60px
+        rgba(220,220,255,.25);
+
+    transition:
+        all 1s ease;
+}
+
+.moon-label {
+
+    margin-top: 25px;
+
+    font-size: 13px;
+
+    letter-spacing: 3px;
+
+    opacity: .6;
+}
+
+.moon-controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 30px;
+}
+
+.moon-controls button {
+
+    padding:
+        10px 15px;
+
+    background:
+        rgba(255,255,255,.03);
+
+    color: white;
+
+    border:
+        1px solid
+        rgba(255,255,255,.2);
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.moon-controls button:hover {
+    background: rgba(255,255,255,.1);
+}
+
+/* =========================================================
+   CONSTELLATIONS
+========================================================= */
+
+.constellation-area {
+
+    position: relative;
+
+    width: min(700px, 95vw);
+
+    height: 400px;
+
+    margin:
+        50px auto;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.015);
+
+    overflow: hidden;
+}
+
+.constellation-star {
+
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 15px white;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    z-index: 3;
+}
+
+.constellation-star:hover {
+
+    transform: scale(1.7);
+
+    box-shadow:
+        0 0 30px white;
+}
+
+.constellation-line {
+
+    position: absolute;
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,.25);
+
+    transform-origin: left center;
+
+    z-index: 1;
+}
+
+.constellation-message {
+
+    margin-top: 25px;
+
+    min-height: 40px;
+
+    font-style: italic;
+
+    opacity: .7;
+
+    transition: .5s;
+}
+
+/* =========================================================
+   LETTERS
+========================================================= */
+
+.letters {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(150px,1fr)
+        );
+
+    gap: 25px;
+
+    margin-top: 50px;
+}
+
+.letter {
+
+    height: 170px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-direction: column;
+
+    cursor: pointer;
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    background:
+        rgba(255,255,255,.025);
+
+    transition:
+        .5s;
+
+    font-size: 45px;
+}
+
+.letter:hover {
+
+    transform:
+        translateY(-10px)
+        rotate(-2deg);
+
+    border-color:
+        rgba(255,255,255,.5);
+
+    box-shadow:
+        0 0 40px
+        rgba(255,255,255,.08);
+}
+
+.letter span {
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    margin-top: 15px;
+
+    opacity: .6;
+}
+
+/* =========================================================
+   LETTER MODAL
+========================================================= */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 25px;
+
+    background:
+        rgba(0,0,0,.85);
+
+    backdrop-filter:
+        blur(15px);
+
+    z-index: 500;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity .7s,
+        visibility .7s;
+}
+
+.modal.open {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.modal-content {
+
+    width: min(650px, 95%);
+
+    max-height: 85vh;
+
+    overflow-y: auto;
+
+    padding: 50px 35px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(31,27,55,.95),
+            rgba(7,7,18,.95)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.2);
+
+    transform:
+        scale(.8)
+        translateY(30px);
+
+    transition:
+        transform .8s ease;
+}
+
+.modal.open .modal-content {
+
+    transform:
+        scale(1)
+        translateY(0);
+}
+
+.close-modal {
+
+    position: absolute;
+
+    top: 20px;
+    right: 25px;
+
+    background: none;
+
+    border: none;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+.modal-title {
+
+    font-size: 35px;
+
+    font-weight: normal;
+
+    margin-bottom: 30px;
+}
+
+.modal-text {
+
+    font-size: 17px;
+
+    line-height: 2;
+
+    opacity: .8;
+}
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final {
+
+    min-height: 130vh !important;
+}
+
+.final-title {
+
+    font-size:
+        clamp(45px, 8vw, 85px);
+
+    font-weight: normal;
+
+    line-height: 1;
+
+    margin-bottom: 40px;
+}
+
+.final-text {
+
+    font-size:
+        clamp(20px, 4vw, 32px);
+
+    line-height: 1.8;
+
+    opacity: .85;
+}
+
+.signature {
+
+    margin-top: 70px;
+
+    font-style: italic;
+
+    opacity: .5;
+}
+
+/* =========================================================
+   CINEMATIC TRANSITION
+========================================================= */
+
+#transition {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: #02030a;
+
+    z-index: 900;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transition:
+        opacity .8s ease;
+}
+
+#transition.active {
+    opacity: 1;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:600px) {
+
+    .hero h1 {
+        font-size: 52px;
+    }
+
+    .chapter-text {
+        font-size: 16px;
+    }
+
+    .chapter {
+        padding:
+            100px 20px !important;
+    }
+
+    .planet-orbit {
+        width: 280px;
+        height: 280px;
+    }
+
+    .constellation-area {
+        height: 320px;
+    }
+
+    .modal-content {
+        padding: 45px 22px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     STAR FIELD
+====================================================== -->
+
+<div id="stars"></div>
+
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+
+
+<!-- ======================================================
+     PASSWORD SCREEN
+====================================================== -->
+
+<div id="passwordScreen">
+
+    <div class="password-container">
+
+        <div class="loading-text">
+            PRIVATE UNIVERSE // ACCESS REQUIRED
+        </div>
+
+        <h1 class="password-title">
+            A Universe<br>
+            Made For You
+        </h1>
+
+        <p class="password-subtitle">
+            Somewhere between all the stars,
+            there is a little universe
+            that belongs only to you.
+            <br><br>
+            But you'll need the password
+            to enter it.
+        </p>
+
+        <input
+            id="passwordInput"
+            class="password-input"
+            type="password"
+            placeholder="enter password"
+        >
+
+        <button
+            class="enter-button"
+            onclick="enterUniverse()"
+        >
+            ENTER MY UNIVERSE ✦
+        </button>
+
+        <div
+            id="passwordError"
+            class="error"
+        >
+            That's not the password, starlight.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     TRANSITION
+====================================================== -->
+
+<div id="transition"></div>
+
+
+<!-- ======================================================
+     MUSIC
+====================================================== -->
+
+<audio
+    id="music"
+    loop
+    preload="auto"
+>
+</audio>
+
+<button
+    class="music-button"
+    onclick="toggleMusic()"
+    id="musicButton"
+>
+    ♫
+</button>
+
+
+<!-- ======================================================
+     MAIN WEBSITE
+====================================================== -->
+
+<main id="universe">
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            A message from my universe
+        </div>
+
+        <h1>
+            The Universe<br>
+            I Would Choose<br>
+            You In
+        </h1>
+
+        <p class="hero-description">
+
+            There are billions of stars.
+
+            <br>
+
+            Countless galaxies.
+
+            <br>
+
+            More possibilities
+            than we could ever understand.
+
+            <br><br>
+
+            Somehow,
+
+            <br>
+
+            <strong>I found you.</strong>
+
+        </p>
+
+        <div class="scroll-hint">
+            ↓ SCROLL TO EXPLORE ↓
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 01
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="planet-orbit">
+        <div class="planet"></div>
+    </div>
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            🌌
+        </div>
+
+        <h2 class="chapter-title">
+            The Beginning
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            Before you, I didn't know that a person
+            could slowly become part of your everyday
+            life without you even noticing.
+
+            <br><br>
+
+            Then there was you.
+
+            <br><br>
+
+            Somewhere between the conversations,
+            the jokes, the random moments,
+            and all the little things we shared,
+            you became someone I started looking
+            for in my days.
+
+            <br><br>
+
+            And now I can't really imagine
+            my universe without your existence
+            somewhere in it.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 02
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            ⭐
+        </div>
+
+        <h2 class="chapter-title">
+            Things I Notice About You
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            You probably don't realize
+            how many little things I notice.
+
+        </p>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>
+                    Your Smile
+                </h3>
+
+                <p>
+                    I don't think you realize
+                    how much it can change
+                    my entire mood.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Your Voice
+                </h3>
+
+                <p>
+                    Somehow, hearing you makes
+                    everything feel a little
+                    less heavy.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Your Little Habits
+                </h3>
+
+                <p>
+                    The things you probably don't
+                    even think twice about are
+                    sometimes the things I remember
+                    the most.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Just You
+                </h3>
+
+                <p>
+                    You don't have to be doing
+                    anything special. Sometimes
+                    knowing you're there is enough.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 03 — MEMORIES
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            🪐
+        </div>
+
+        <h2 class="chapter-title">
+            Our Memories
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            Every relationship has its big moments.
+
+            <br><br>
+
+            But somehow, I think I'll remember
+            the little ones the most.
+
+            <br><br>
+
+            The random conversations.
+            The stupid jokes.
+            The late-night talks.
+            The moments where we weren't doing
+            anything special but somehow
+            everything felt special anyway.
+
+        </p>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>
+                    Our First Moment
+                </h3>
+
+                <p>
+                    REPLACE THIS WITH YOUR
+                    ACTUAL FIRST MEMORY.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    A Favorite Memory
+                </h3>
+
+                <p>
+                    Write one of your favorite
+                    moments together here.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    An Inside Joke
+                </h3>
+
+                <p>
+                    Put one of your funniest
+                    memories here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 04 — INFINITE UNIVERSES
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            ♾️
+        </div>
+
+        <h2 class="chapter-title">
+            Infinite Universes
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            Imagine there are infinite versions
+            of this universe.
+
+            <br><br>
+
+            In one, we never met.
+
+            <br><br>
+
+            In another, we passed each other
+            without knowing.
+
+            <br><br>
+
+            In another, we met but became strangers.
+
+            <br><br>
+
+            Maybe there are universes where
+            our paths cross for only a moment.
+
+            <br><br>
+
+            But if I had the choice...
+
+            <br><br>
+
+            <strong>
+                I'd still choose the universe
+                where I get to know you.
+            </strong>
+
+            <br><br>
+
+            Not because it's perfect.
+
+            <br><br>
+
+            Not because everything will
+            always be easy.
+
+            <br><br>
+
+            But because you're here.
+
+            <br><br>
+
+            And I want to be here with you.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 05 — MOON PHASES
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            🌙
+        </div>
+
+        <h2 class="chapter-title">
+            Our Moon
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            The moon changes.
+
+            <br><br>
+
+            Sometimes it is barely visible.
+
+            Sometimes it fills the entire sky.
+
+            <br><br>
+
+            But it is still the same moon.
+
+            <br><br>
+
+            Maybe people are like that too.
+
+            <br><br>
+
+            We don't have to be at our brightest
+            every single day.
+
+        </p>
+
+
+        <div class="moon-container">
+
+            <div
+                id="moon"
+                class="moon"
+            ></div>
+
+            <div
+                id="moonLabel"
+                class="moon-label"
+            >
+                NEW MOON
+            </div>
+
+        </div>
+
+
+        <div class="moon-controls">
+
+            <button onclick="previousMoon()">
+                ←
+            </button>
+
+            <button onclick="nextMoon()">
+                →
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 06 — CONSTELLATIONS
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            ✨
+        </div>
+
+        <h2 class="chapter-title">
+            Find Our Constellation
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            Some stars look like nothing
+            when they're alone.
+
+            <br><br>
+
+            But connect them together...
+
+            <br><br>
+
+            and suddenly they become
+            something meaningful.
+
+            <br><br>
+
+            Click the stars.
+
+        </p>
+
+
+        <div class="constellation-area">
+
+            <!-- STAR 1 -->
+            <div
+                class="constellation-star"
+                style="left:15%;top:65%;"
+                onclick="constellationClick(1)"
+            ></div>
+
+            <!-- STAR 2 -->
+            <div
+                class="constellation-star"
+                style="left:30%;top:35%;"
+                onclick="constellationClick(2)"
+            ></div>
+
+            <!-- STAR 3 -->
+            <div
+                class="constellation-star"
+                style="left:48%;top:55%;"
+                onclick="constellationClick(3)"
+            ></div>
+
+            <!-- STAR 4 -->
+            <div
+                class="constellation-star"
+                style="left:68%;top:25%;"
+                onclick="constellationClick(4)"
+            ></div>
+
+            <!-- STAR 5 -->
+            <div
+                class="constellation-star"
+                style="left:82%;top:65%;"
+                onclick="constellationClick(5)"
+            ></div>
+
+            <!-- LINES -->
+
+            <div
+                class="constellation-line"
+                style="
+                    width:145px;
+                    left:16%;
+                    top:62%;
+                    transform:rotate(-28deg);
+                "
+            ></div>
+
+            <div
+                class="constellation-line"
+                style="
+                    width:130px;
+                    left:31%;
+                    top:38%;
+                    transform:rotate(30deg);
+                "
+            ></div>
+
+            <div
+                class="constellation-line"
+                style="
+                    width:150px;
+                    left:49%;
+                    top:52%;
+                    transform:rotate(-28deg);
+                "
+            ></div>
+
+            <div
+                class="constellation-line"
+                style="
+                    width:130px;
+                    left:69%;
+                    top:28%;
+                    transform:rotate(32deg);
+                "
+            ></div>
+
+        </div>
+
+
+        <div
+            id="constellationMessage"
+            class="constellation-message"
+        >
+            Click the stars one by one...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 07 — FUTURE
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            🌙
+        </div>
+
+        <h2 class="chapter-title">
+            Things I Want To Experience With You
+        </h2>
+
+        <div class="divider"></div>
+
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>🌧️ Rain</h3>
+                <p>
+                    Get caught in the rain together.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🌃 Sunrise</h3>
+                <p>
+                    Stay awake until morning
+                    talking about everything.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🎬 Movie Nights</h3>
+                <p>
+                    Watch movies together and
+                    probably fall asleep halfway.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>✈️ Somewhere New</h3>
+                <p>
+                    Travel somewhere neither
+                    of us has ever been.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🌌 Stargazing</h3>
+                <p>
+                    Sit somewhere quiet and
+                    look at the stars together.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🫂 Nothing</h3>
+                <p>
+                    Spend an entire day together
+                    doing absolutely nothing.
+                </p>
+            </div>
+
+        </div>
+
+
+        <p
+            class="chapter-text"
+            style="margin-top:50px;"
+        >
+
+            I don't know exactly what
+            the future looks like.
+
+            <br><br>
+
+            But there are so many little things
+            I'd love to experience if you're there.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 08 — LETTERS
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            💌
+        </div>
+
+        <h2 class="chapter-title">
+            Letters From My Universe
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            There are some things
+            I don't want you to forget.
+
+            <br><br>
+
+            Click an envelope.
+
+        </p>
+
+
+        <div class="letters">
+
+            <div
+                class="letter"
+                onclick="openLetter(1)"
+            >
+
+                💌
+
+                <span>
+                    OPEN ME
+                </span>
+
+            </div>
+
+
+            <div
+                class="letter"
+                onclick="openLetter(2)"
+            >
+
+                💌
+
+                <span>
+                    WHEN YOU MISS ME
+                </span>
+
+            </div>
+
+
+            <div
+                class="letter"
+                onclick="openLetter(3)"
+            >
+
+                💌
+
+                <span>
+                    WHEN YOU'RE SAD
+                </span>
+
+            </div>
+
+
+            <div
+                class="letter"
+                onclick="openLetter(4)"
+            >
+
+                💌
+
+                <span>
+                    ONE LAST THING
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     CHAPTER 09 — WHEN SHE FORGETS
+====================================================== -->
+
+<section class="chapter">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            🫂
+        </div>
+
+        <h2 class="chapter-title">
+            For The Days You Forget
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="chapter-text">
+
+            If someday you forget how loved you are,
+
+            <br>
+
+            come back here.
+
+            <br><br>
+
+            If someday you feel like you're not enough,
+
+            <br>
+
+            come back here.
+
+            <br><br>
+
+            If someday your mind becomes too loud,
+
+            <br>
+
+            come back here.
+
+            <br><br>
+
+            If someday you wonder whether
+            someone notices the little things about you...
+
+            <br><br>
+
+            <strong>
+                I do.
+            </strong>
+
+            <br><br>
+
+            I notice you.
+
+            <br><br>
+
+            I appreciate you.
+
+            <br><br>
+
+            I love you.
+
+            <br><br>
+
+            And even on the days when you don't
+            feel particularly lovable,
+
+            <br><br>
+
+            you are still you.
+
+            <br><br>
+
+            And that's already someone worth loving.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     FINAL
+====================================================== -->
+
+<section class="chapter final">
+
+    <div class="chapter-inner">
+
+        <div class="chapter-icon">
+            ✨
+        </div>
+
+        <h2 class="final-title">
+            The Universe<br>
+            I Choose
+        </h2>
+
+        <div class="divider"></div>
+
+        <p class="final-text">
+
+            Maybe the universe
+            is unimaginably huge.
+
+            <br><br>
+
+            Maybe there are more stars
+            than we could ever count.
+
+            <br><br>
+
+            More galaxies than we could ever see.
+
+            <br><br>
+
+            More possibilities than
+            we'll ever understand.
+
+            <br><br>
+
+            And maybe somewhere out there
+            are countless versions of us.
+
+            <br><br>
+
+            But I'm not interested in all of them.
+
+            <br><br>
+
+            I'm interested in
+            <strong>this one.</strong>
+
+            <br><br>
+
+            The one where I met you.
+
+            <br><br>
+
+            The one where I get to love you.
+
+            <br><br>
+
+            So if I were given the choice
+            to search through every universe...
+
+            <br><br>
+
+            <strong>
+                I'd still look for you.
+            </strong>
+
+            <br><br>
+
+            And if I found you again...
+
+            <br><br>
+
+            <strong>
+                I'd choose you again.
+            </strong>
+
+            <br><br>
+
+            In this universe.
+
+            <br><br>
+
+            In another universe.
+
+            <br><br>
+
+            In every universe where
+            we're lucky enough to cross paths.
+
+        </p>
+
+
+        <p class="signature">
+
+            — made for you,
+            by someone who loves you 🌌
+
+        </p>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ======================================================
+     LETTER MODAL
+====================================================== -->
+
+<div
+    id="letterModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <button
+            class="close-modal"
+            onclick="closeLetter()"
+        >
+            ×
+        </button>
+
+        <h2
+            id="modalTitle"
+            class="modal-title"
+        >
+        </h2>
+
+        <p
+            id="modalText"
+            class="modal-text"
+        >
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+const PASSWORD = "spidey";
+
+
+function enterUniverse() {
+
+    const input =
+        document.getElementById("passwordInput");
+
+    const error =
+        document.getElementById("passwordError");
+
+    const passwordScreen =
+        document.getElementById("passwordScreen");
+
+    const universe =
+        document.getElementById("universe");
+
+    const music =
+        document.getElementById("music");
+
+
+    if (
+        input.value.trim().toLowerCase()
+        === PASSWORD.toLowerCase()
+    ) {
+
+        error.classList.remove("show");
+
+        passwordScreen.classList.add("hidden");
+
+        setTimeout(() => {
+
+            universe.classList.add("visible");
+
+            if (music.src) {
+
+                music.play()
+                .catch(() => {});
+
+            }
+
+        }, 800);
+
+    }
+
+    else {
+
+        error.classList.add("show");
+
+        input.value = "";
+
+        input.focus();
+
+    }
+
+}
+
+
+/* Allow ENTER key */
+
+document
+    .getElementById("passwordInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+                enterUniverse();
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   STAR GENERATOR
+========================================================= */
+
+const starsContainer =
+    document.getElementById("stars");
+
+
+for (let i = 0; i < 350; i++) {
+
+    const star =
+        document.createElement("div");
+
+    star.className = "star";
+
+    star.style.left =
+        Math.random() * 100 + "%";
+
+    star.style.top =
+        Math.random() * 100 + "%";
+
+    const size =
+        Math.random() * 2.5 + 1;
+
+    star.style.width =
+        size + "px";
+
+    star.style.height =
+        size + "px";
+
+    star.style.setProperty(
+        "--opacity",
+        Math.random() * .8 + .2
+    );
+
+    star.style.setProperty(
+        "--duration",
+        Math.random() * 4 + 2 + "s"
+    );
+
+    starsContainer.appendChild(star);
+
+}
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+const music =
+    document.getElementById("music");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+let playing = false;
+
+
+function toggleMusic() {
+
+    if (!music.src) {
+
+        alert(
+            "Add your music file to the <audio> element in index.html first."
+        );
+
+        return;
+
+    }
+
+
+    if (playing) {
+
+        music.pause();
+
+        musicButton.innerHTML = "♫";
+
+        playing = false;
+
+    }
+
+    else {
+
+        music.play()
+            .then(() => {
+
+                musicButton.innerHTML = "❚❚";
+
+                playing = true;
+
+            })
+            .catch(() => {
+
+                alert(
+                    "Your browser blocked the music. Tap the button again."
+                );
+
+            });
+
+    }
+
+}
+
+
+/* =========================================================
+   SCROLL CINEMATIC REVEALS
+========================================================= */
+
+const chapters =
+    document.querySelectorAll(
+        ".chapter-inner"
+    );
+
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target
+                        .classList
+                        .add("visible");
+
+                }
+
+            });
+
+        },
+        {
+            threshold: .2
+        }
+    );
+
+
+chapters.forEach(
+    chapter =>
+        observer.observe(chapter)
+);
+
+
+/* =========================================================
+   MOON PHASES
+========================================================= */
+
+const moon =
+    document.getElementById("moon");
+
+const moonLabel =
+    document.getElementById("moonLabel");
+
+
+const moonPhases = [
+
+    {
+        name: "NEW MOON",
+        shadow:
+            "linear-gradient(90deg,#080812,#080812)"
+    },
+
+    {
+        name: "WAXING CRESCENT",
+        shadow:
+            "linear-gradient(90deg,#080812 45%,#d9d7e8 50%)"
+    },
+
+    {
+        name: "FIRST QUARTER",
+        shadow:
+            "linear-gradient(90deg,#080812 50%,#d9d7e8 50%)"
+    },
+
+    {
+        name: "WAXING GIBBOUS",
+        shadow:
+            "linear-gradient(90deg,#080812 30%,#d9d7e8 60%)"
+    },
+
+    {
+        name: "FULL MOON",
+        shadow:
+            "radial-gradient(circle,#ffffff,#cfcde3)"
+    },
+
+    {
+        name: "WANING GIBBOUS",
+        shadow:
+            "linear-gradient(90deg,#d9d7e8 40%,#080812 70%)"
+    },
+
+    {
+        name: "LAST QUARTER",
+        shadow:
+            "linear-gradient(90deg,#d9d7e8 50%,#080812 50%)"
+    },
+
+    {
+        name: "WANING CRESCENT",
+        shadow:
+            "linear-gradient(90deg,#d9d7e8 30%,#080812 55%)"
+    }
+
+];
+
+
+let moonIndex = 0;
+
+
+function updateMoon() {
+
+    const phase =
+        moonPhases[moonIndex];
+
+    moonLabel.textContent =
+        phase.name;
+
+    moon.style.background =
+        phase.shadow;
+
+}
+
+
+function nextMoon() {
+
+    moonIndex++;
+
+    if (
+        moonIndex >=
+        moonPhases.length
+    ) {
+
+        moonIndex = 0;
+
+    }
+
+    updateMoon();
+
+}
+
+
+function previousMoon() {
+
+    moonIndex--;
+
+    if (moonIndex < 0) {
+
+        moonIndex =
+            moonPhases.length - 1;
+
+    }
+
+    updateMoon();
+
+}
+
+
+updateMoon();
+
+
+/* =========================================================
+   CONSTELLATION
+========================================================= */
+
+let constellationProgress = 0;
+
+
+const constellationMessages = {
+
+    1:
+        "Every story begins with a single star.",
+
+    2:
+        "Then another appears, and suddenly the sky feels different.",
+
+    3:
+        "Somewhere along the way, our paths connected.",
+
+    4:
+        "And all those little moments became something beautiful.",
+
+    5:
+        "This is our constellation. And I would choose it again."
+
+};
+
+
+function constellationClick(number) {
+
+    if (
+        number ===
+        constellationProgress + 1
+    ) {
+
+        constellationProgress = number;
+
+        document
+            .getElementById(
+                "constellationMessage"
+            )
+            .textContent =
+            constellationMessages[number];
+
+    }
+
+}
+
+
+/* =========================================================
+   LETTERS
+========================================================= */
+
+const letters = {
+
+    1: {
+
+        title:
+            "A Little Reminder",
+
+        text:
+            `
+            I don't know if I say it enough,
+            but I appreciate having you in my life.
+
+            <br><br>
+
+            Not just for the big things.
+
+            <br><br>
+
+            I appreciate the random conversations,
+            the silly moments, the little updates,
+            and all the ordinary things that somehow
+            become special because they're with you.
+
+            <br><br>
+
+            Thank you for being you.
+            `
+
+    },
+
+
+    2: {
+
+        title:
+            "For When You Miss Me",
+
+        text:
+            `
+            If you're reading this because
+            you miss me...
+
+            <br><br>
+
+            then I probably miss you too.
+
+            <br><br>
+
+            Somewhere under the same sky,
+            we're both looking at the same moon,
+            even if we're far apart.
+
+            <br><br>
+
+            So until I can be there,
+            let this little universe
+            remind you that you're loved.
+            `
+
+    },
+
+
+    3: {
+
+        title:
+            "For When You're Sad",
+
+        text:
+            `
+            You don't have to be okay
+            all the time.
+
+            <br><br>
+
+            You don't have to pretend
+            that everything is fine.
+
+            <br><br>
+
+            Rest when you need to.
+
+            Cry when you need to.
+
+            Take your time.
+
+            <br><br>
+
+            And please remember:
+
+            <br><br>
+
+            A bad day does not make
+            you a bad person.
+
+            <br><br>
+
+            You are still loved
+            on your worst days.
+            `
+
+    },
+
+
+    4: {
+
+        title:
+            "One Last Thing",
+
+        text:
+            `
+            Out of all the things
+            I could have written here...
+
+            <br><br>
+
+            I think this is the one
+            I want you to remember.
+
+            <br><br>
+
+            You are not just someone
+            who happened to enter my life.
+
+            <br><br>
+
+            You became part of my universe.
+
+            <br><br>
+
+            And if I had to start
+            this universe all over again...
+
+            <br><br>
+
+            I'd still hope
+            somehow, somewhere,
+
+            <br><br>
+
+            I would find you.
+            `
+
+    }
+
+};
+
+
+function openLetter(number) {
+
+    const modal =
+        document.getElementById(
+            "letterModal"
+        );
+
+    const title =
+        document.getElementById(
+            "modalTitle"
+        );
+
+    const text =
+        document.getElementById(
+            "modalText"
+        );
+
+
+    title.innerHTML =
+        letters[number].title;
+
+    text.innerHTML =
+        letters[number].text;
+
+    modal.classList.add("open");
+
+}
+
+
+function closeLetter() {
+
+    document
+        .getElementById(
+            "letterModal"
+        )
+        .classList.remove("open");
+
+}
+
+
+/* Close modal by clicking outside */
+
+document
+    .getElementById("letterModal")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeLetter();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   CINEMATIC PAGE TRANSITIONS
+========================================================= */
+
+const transition =
+    document.getElementById(
+        "transition"
+    );
+
+
+document
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            function(event) {
+
+                const target =
+                    document.querySelector(
+                        this.getAttribute("href")
+                    );
+
+                if (!target) return;
+
+                event.preventDefault();
+
+                transition.classList.add(
+                    "active"
+                );
+
+                setTimeout(() => {
+
+                    target.scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+                }, 400);
+
+                setTimeout(() => {
+
+                    transition.classList.remove(
+                        "active"
+                    );
+
+                }, 1200);
+
+            }
+        );
+
+    });
+
+
+</script>
+
+</body>
+</html>
+
